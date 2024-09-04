@@ -1,0 +1,23 @@
+server:
+  port: 8081
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: producto-service-route
+          uri: http://producto-service:8081
+          predicates:
+            - Path=/api/v1/productos/**
+          filters:
+            - RewritePath=/api/v1/productos/(?<segment>.*)=/api/v1/productos/(?<segment>)
+        - id: api-gateway-healthcheck
+          uri: http://localhost:8080/actuator/health
+          predicates:
+            - Path=/actuator/health
+          filters:
+            - AddResponseHeader=X-Powered-By, Spring WebFlux
+        - id: api-route
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/**

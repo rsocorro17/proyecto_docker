@@ -1,0 +1,3 @@
+CREATE DATABASE IF NOT EXISTS ms_productos;
+GRANT ALL PRIVILEGES ON ms_productos.* TO 'root'@'%' IDENTIFIED BY 'admin';
+FLUSH PRIVILEGES;
